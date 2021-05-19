@@ -1,0 +1,17 @@
+{
+  "name": "oauth-service",
+  "version": "1.0.0",
+  "description": "Serverless Oauth Service Project",
+  "author": "Aworei <aworei@yandex.com>",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "sls deploy",
+    "remove": "sls remove"
+  },
+  "devDependencies": {
+    "serverless-bundle": "^4.2.2"
+  },
+  "dependencies": {
+    "googleapis": "^70.0.0"
+  }
+}

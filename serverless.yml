@@ -1,0 +1,47 @@
+service: oauth-service
+
+app: oauth
+org: rueihuan
+
+frameworkVersion: "2"
+
+plugins:
+  - serverless-bundle
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  memorySize: 128
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'auth'}
+
+functions:
+  google:
+    handler: src/providers/google.handler
+    events:
+      - http:
+          method: GET
+          path: /google
+          cors: true
+    environment:
+      GOOGLE_CLIENT_ID: 908921234234-kaf8907gsr0vabcd5s1238evlppa3d9i.apps.googleusercontent.com
+      GOOGLE_CLIENT_SECRET: Uabcdvs7_1_Cabcdx_wMTFwJ
+      GOOGLE_REDIRECT:
+        Fn::Join:
+          - ""
+          - - "https://"
+            - Ref: ApiGatewayRestApi
+            - ".execute-api."
+            - ${self:provider.region}
+            - "."
+            - Ref: AWS::URLSuffix
+            - "/"
+            - ${self:provider.stage}
+            - "/"
+            - "google"
+
+custom:
+  bundle:
+    linting: false
+    packager: yarn
